@@ -6001,6 +6001,11 @@ react-native-chart-kit@^6.6.1:
     paths-js "^0.4.10"
     point-in-polygon "^1.0.1"
 
+react-native-default-locale@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-default-locale/-/react-native-default-locale-0.1.2.tgz#8c4c9eb33dd6e2adc5f33c6d4c95027d290a434b"
+  integrity sha512-sJd0n7SwzKzgX7Fq2rAJ9Js5gZBerbLBUGiKboXWfa+Dt0KdK2ZmGjbbc4+KXmlazFmWd0CZ3bMN+hYqkFSZoA==
+
 react-native-dropdown-picker@^3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-3.7.1.tgz#ead80b69108bfe8cf56fef5a68d5545d5063b33c"
