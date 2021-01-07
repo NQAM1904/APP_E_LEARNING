@@ -21,11 +21,14 @@ export default class LichHocComponent extends Component {
     this.state = {
       DataTick: {},
       DataTickArr: [],
-      DataShow: []
+      DataShow: [],
+      selectItem: [],
     };
   }
-  getMonHoc = () => {
-    const result = fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
+  getMonHoc = (day) => {
+    console.log(day)
+    console.log(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}&Day=${day}`)
+    const result = fetch(`${API_URL}/GetMonHocByDay?IDSINHVIEN=${userData.IDSTUDENT}&Day=${day}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -35,6 +38,10 @@ export default class LichHocComponent extends Component {
     })
       .then((response) => response.json())
       .then((result) => {
+        console.log(result)
+        this.setState({
+          selectItem: result.Data
+        })
         return result;
       })
       .catch((error) => {
@@ -43,6 +50,7 @@ export default class LichHocComponent extends Component {
       });
     return result;
   }
+
   async componentDidMount() {
     const result = await fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
       method: 'GET',
@@ -201,13 +209,14 @@ export default class LichHocComponent extends Component {
   GetDayLichHoc = (date) => {
     let tmp = this.state.DataTickArr;
 
-    this.setState({ DataShow: tmp.filter(x => x.date.toString() == date) }, () => console.log(this.state.DataShow))
+    // this.setState({ DataShow: tmp.filter(x => x.date.toString() == date) }, () => console.log(this.state.DataShow))
   }
 
-  showMon = (DataShow) => {
+  showMon = (selectItem) => {
+
     var result = null;
-    if (DataShow.length > 0) {
-      result = DataShow.map((item, index) => {
+    if (selectItem.length > 0) {
+      result = selectItem.map((item, index) => {
         return (
           <ItemLH
             key={index}
@@ -222,7 +231,7 @@ export default class LichHocComponent extends Component {
     return result;
   }
   render() {
-    const { DataShow } = this.state;
+    const { selectItem, DataShow, DataTickArr } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -250,7 +259,7 @@ export default class LichHocComponent extends Component {
         </View>
         <View style={{ padding: 20 }}>
           <Calendar
-            onDayPress={(day) => this.GetDayLichHoc(day.dateString)}
+            onDayPress={(day) => this.getMonHoc(day.dateString)}
             markedDates={
               this.state.DataTick
             }
@@ -266,7 +275,7 @@ export default class LichHocComponent extends Component {
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}>
-            {this.showMon(DataShow)}
+            {this.showMon(selectItem)}
           </ScrollView>
         </View>
       </View>
