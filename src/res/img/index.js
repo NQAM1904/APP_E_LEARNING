@@ -10,6 +10,8 @@ const images = {
   ic_coso: require('./ic_coso.png'),
   Profile: require('./Profile.png'),
   Avatar: require('./ava.jpg'),
+  plus: require('./icon_UP.png'),
+  down: require('./icon_UP.png'),
 };
 
 export default images;

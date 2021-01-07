@@ -13,11 +13,35 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
 import locale from 'react-native-default-locale';
 import images from '../../res/img';
-
+import ItemLH from './ItemLH';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class LichHocComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { DataTick: {}, DataTickArr: [], DataShow: [] };
+    this.state = {
+      DataTick: {},
+      DataTickArr: [],
+      DataShow: []
+    };
+  }
+  getMonHoc = () => {
+    const result = fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        return result;
+      })
+      .catch((error) => {
+        alert('Vui lòng kiểm tra internet!');
+        console.log(error)
+      });
+    return result;
   }
   async componentDidMount() {
     const result = await fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
@@ -145,6 +169,8 @@ export default class LichHocComponent extends Component {
       // today: Date.now(),
     };
     LocaleConfig.defaultLocale = 'en';
+
+
   }
   checkDate = (val) => {
     switch (val) {
@@ -175,9 +201,28 @@ export default class LichHocComponent extends Component {
   GetDayLichHoc = (date) => {
     let tmp = this.state.DataTickArr;
 
-    this.setState({ DataShow: tmp.filter(x => x.date.toString() == date) }, () => console.log(this.state.DataShow, "CLimax"))
+    this.setState({ DataShow: tmp.filter(x => x.date.toString() == date) }, () => console.log(this.state.DataShow))
+  }
+
+  showMon = (DataShow) => {
+    var result = null;
+    if (DataShow.length > 0) {
+      result = DataShow.map((item, index) => {
+        return (
+          <ItemLH
+            key={index}
+            TENMONHOC={item.TENMONHOC}
+            TENCS={item.TENCS}
+            PHONGHOC={item.PHONGHOC}
+          />
+
+        );
+      })
+    }
+    return result;
   }
   render() {
+    const { DataShow } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -198,11 +243,14 @@ export default class LichHocComponent extends Component {
             <Text style={{ color: '#262626', fontSize: 20, marginLeft: 15 }}>
               Lịch học
             </Text>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('DangKyMH') }}>
+              <Image source={images.plus} style={{ width: 50, height: 50, tintColor: '#000' }} resizeMode={'contain'} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ padding: 20 }}>
           <Calendar
-            onDayPress={(day) => console.log(day)}
+            onDayPress={(day) => this.GetDayLichHoc(day.dateString)}
             markedDates={
               this.state.DataTick
             }
@@ -218,88 +266,7 @@ export default class LichHocComponent extends Component {
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ flexGrow: 1 }}>
-            <View
-              style={{
-                borderRadius: 0,
-                padding: 10,
-                backgroundColor: '#ffffff',
-              }}>
-              <Text>Ca 2</Text>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_monhoc}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>
-                  Môn học: Trí tuệ nhân tạo
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_coso}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>Cở sở: E1- phòng 2</Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                borderRadius: 0,
-                padding: 10,
-                marginTop: 10,
-                backgroundColor: '#ffffff',
-              }}>
-              <Text>Ca 2</Text>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_monhoc}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>
-                  Môn học: Trí tuệ nhân tạo
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_coso}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>Cở sở: E1- phòng 2</Text>
-              </View>
-            </View>
-
-            <View
-              style={{
-                borderRadius: 0,
-                padding: 10,
-                marginTop: 10,
-                backgroundColor: '#ffffff',
-              }}>
-              <Text>Ca 2</Text>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_monhoc}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>
-                  Môn học: Trí tuệ nhân tạo
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row', padding: 5 }}>
-                <Image
-                  source={images.ic_coso}
-                  style={{ width: 25, height: 30, marginRight: 10 }}
-                  resizeMode="center"
-                />
-                <Text style={{ alignItems: 'center' }}>Cở sở: E1- phòng 2</Text>
-              </View>
-            </View>
+            {this.showMon(DataShow)}
           </ScrollView>
         </View>
       </View>

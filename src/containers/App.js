@@ -10,6 +10,7 @@ import MonHocComponent from '../components/MonHoc/MonHocComponent';
 import CaNhanComponent from '../components/CaNhan/CaNhanComponent';
 import LichHocComponent from '../components/LichHoc/LichHocComponent';
 import ProfileComponent from '../components/CaNhan/ProfileComponent';
+import DangKyMH from '../components/LichHoc/DangKyMH';
 import ChooseYear from '../components/MonHoc/ChooseYear';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -29,12 +30,9 @@ const MainStackScreen = () => (
       }}
       initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginContainer} options={{}} />
-      <Stack.Screen
-        name="Register"
-        component={RegisterComponent}
-        options={{}}
-      />
+      <Stack.Screen name="Register" component={RegisterComponent} options={{}} />
       <Stack.Screen name="CaNhan" component={CaNhanComponent} options={{}} />
+      <Stack.Screen name="DangKyMH" component={DangKyMH} />
       <Stack.Screen name="Tab" component={MainTabScreen} options={{}} />
     </Stack.Navigator>
   </NavigationContainer>
