@@ -28,7 +28,7 @@ const MainStackScreen = () => (
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Login">
+      initialRouteName="DangKyMH">
       <Stack.Screen name="Login" component={LoginContainer} options={{}} />
       <Stack.Screen name="Register" component={RegisterComponent} options={{}} />
       <Stack.Screen name="CaNhan" component={CaNhanComponent} options={{}} />

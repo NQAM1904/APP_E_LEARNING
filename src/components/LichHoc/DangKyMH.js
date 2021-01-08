@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import Header from '../Custom/Header';
 import BottomSheet from '../Custom/BottomSheet';
+import Header from '../Custom/Header';
+
 class DangKyMH extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
     render() {
         return (
             <View>
@@ -10,7 +17,8 @@ class DangKyMH extends Component {
                     title="Đăng ký môn học"
                     onPressBackButton={() => this.props.navigation.goBack()}
                 />
-                <BottomSheet />
+                <Text style={{ margin: 10 }}>Môn học</Text>
+                <BottomSheet placeholder="asdsasdasdasdad" />
             </View>
         );
 

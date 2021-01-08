@@ -21,7 +21,6 @@ const Header = (props) => {
                     fontWeight: 'bold',
                     fontSize: 20,
                     color: '#1A232C',
-                    fflex: 1,
                     width: '70%'
                 }}>
                 {props.title}
