@@ -13,7 +13,7 @@ import ProfileComponent from '../components/CaNhan/ProfileComponent';
 import DangKyMH from '../components/LichHoc/DangKyMH';
 import ChooseYear from '../components/MonHoc/ChooseYear';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import DetailtNew from '../components/Home/DetailtNew'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -34,6 +34,8 @@ const MainStackScreen = () => (
       <Stack.Screen name="CaNhan" component={CaNhanComponent} options={{}} />
       <Stack.Screen name="DangKyMH" component={DangKyMH} />
       <Stack.Screen name="Tab" component={MainTabScreen} options={{}} />
+      <Stack.Screen name="DetailtNew" component={DetailtNew} options={{}} />
+
     </Stack.Navigator>
   </NavigationContainer>
 );

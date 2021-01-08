@@ -40,7 +40,7 @@ export default class HomeComponent extends Component {
       });
     return res;
   }
-  
+
   showItem = (itemData) => {
     var result = null;
     if (itemData.length > 0) {
@@ -48,16 +48,22 @@ export default class HomeComponent extends Component {
         return (
           <ItemNews
             key={index}
+            IDEVENT={item.IDEVENT}
             TENEVNT={item.TENEVNT}
             THOIGIANEV={item.THOIGIANEV}
             MOTA={item.MOTA}
+            onPress={() => this.props.navigation.navigate('DetailtNew', { id: item.IDEVENT, title: item.TENEVENT })}
           />
         )
       })
+    } else {
+      return (<Text>Không có môn học</Text>);
     }
     return result;
 
   }
+
+
   render() {
     const { itemData } = this.state;
     return (

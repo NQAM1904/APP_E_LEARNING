@@ -23,6 +23,7 @@ export default class LichHocComponent extends Component {
       DataTickArr: [],
       DataShow: [],
       selectItem: [],
+      message: ''
     };
   }
   getMonHoc = (day) => {
@@ -40,7 +41,8 @@ export default class LichHocComponent extends Component {
       .then((result) => {
         console.log(result)
         this.setState({
-          selectItem: result.Data
+          selectItem: result.Data,
+          message: result.Message
         })
         return result;
       })
@@ -134,49 +136,49 @@ export default class LichHocComponent extends Component {
     const country = locale.country;
     console.log(language, country)
 
-    LocaleConfig.locales['en'] = {
+    LocaleConfig.locales["en"] = {
       monthNames: [
-        'Tháng 1',
-        'Tháng 2',
-        'Tháng 3',
-        'Tháng 4',
-        'Tháng 5',
-        'Tháng 6',
-        'Tháng 7',
-        'Tháng 8',
-        'Tháng 9',
-        'Tháng 10',
-        'Tháng 11',
-        'Tháng 12',
+        "Tháng 1",
+        "Tháng 2",
+        "Tháng 3",
+        "Tháng 4",
+        "Tháng 5",
+        "Tháng 6",
+        "Tháng 7",
+        "Tháng 8",
+        "Tháng 9",
+        "Tháng 10",
+        "Tháng 11",
+        "Tháng 12",
       ],
       monthNamesShort: [
-        'Th 1.',
-        'Th 2.',
-        'Th 3',
-        'Th 4',
-        'Th 5',
-        'Th 6',
-        'Th 7.',
-        'Th 8',
-        'Th 9.',
-        'Th 10.',
-        'Th 11.',
-        'Th 12.',
+        "Th 1.",
+        "Th 2.",
+        "Th 3",
+        "Th 4",
+        "Th 5",
+        "Th 6",
+        "Th 7.",
+        "Th 8",
+        "Th 9.",
+        "Th 10.",
+        "Th 11.",
+        "Th 12.",
       ],
       dayNames: [
-        'Chủ Nhật',
-        'Thứ 2',
-        'Thứ 3',
-        'Thứ 4',
-        'Thứ 5',
-        'Thứ 6',
-        'Thứ 7',
-
+        "Chủ Nhật",
+        "Thứ 2",
+        "Thứ 3",
+        "Thứ 4",
+        "Thứ 5",
+        "Thứ 6",
+        "Thứ 7",
       ],
-      dayNamesShort: ['CN.', 'T2.', 'T3.', 'T4.', 'T5.', 'T6.', 'T7.'],
+      dayNamesShort: ["CN.", "T2.", "T3.", "T4.", "T5.", "T6.", "T7."],
       // today: Date.now(),
     };
-    LocaleConfig.defaultLocale = 'en';
+    LocaleConfig.defaultLocale = "en";
+
 
 
   }
@@ -215,19 +217,23 @@ export default class LichHocComponent extends Component {
   showMon = (selectItem) => {
 
     var result = null;
-    if (selectItem.length > 0) {
-      result = selectItem.map((item, index) => {
-        return (
-          <ItemLH
-            key={index}
-            TENMONHOC={item.TENMONHOC}
-            TENCS={item.TENCS}
-            PHONGHOC={item.PHONGHOC}
-          />
-
-        );
-      })
+    if (selectItem !== null) {
+      if (selectItem.length > 0) {
+        result = selectItem.map((item, index) => {
+          return (
+            <ItemLH
+              key={index}
+              TENMONHOC={item.TENMONHOC}
+              TENCS={item.TENCS}
+              PHONGHOC={item.PHONGHOC}
+            />
+          );
+        })
+      }
+    } else {
+      result = <Text>{this.state.message}</Text>;
     }
+
     return result;
   }
   render() {

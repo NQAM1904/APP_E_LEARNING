@@ -15,12 +15,14 @@ const Header = (props) => {
                 elevation: 5
             }}>
             <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 style={{
                     alignSelf: 'center',
                     fontWeight: 'bold',
                     fontSize: 20,
                     color: '#1A232C',
+                    fflex: 1,
+                    width: '70%'
                 }}>
                 {props.title}
             </Text>

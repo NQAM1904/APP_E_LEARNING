@@ -20,9 +20,15 @@ const formatSubstringTitle = value => {
         }
     } else return 'Trống';
 }
+
 const ItemNews = props => {
+    function onEdit(id) {
+        props.onEdit(id);
+
+    }
     return (
         <TouchableOpacity
+            onPress={() => props.onPress()}
             style={{
                 marginTop: 5,
                 width: '100%',
@@ -31,15 +37,7 @@ const ItemNews = props => {
                 padding: 6,
                 borderRadius: 10
             }}>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    padding: 15,
-                }}>
-                <Text style={{ fontSize: 17 }}>{formatSubstringTitle(props.TENEVNT)}</Text>
-                <Text style={{ fontSize: 17, color: 'red' }}>Đọc tiếp</Text>
-            </View>
+
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -50,7 +48,7 @@ const ItemNews = props => {
                 }}>
                 <Image
                     source={require('../../res/img/sukien.png')}
-                    style={{ resizeMode: 'contain', height: 150, width: 200 }}
+                    style={{ resizeMode: 'contain', height: 150, width: 200, borderRadius: 20 }}
                 />
                 <HTML source={{ html: formatSubstring(props.MOTA) }} contentWidth={contentWidth} containerStyle={{ width: 25, height: 30, flex: 1, alignItems: 'center', justifyContent: 'center' }} />
 
