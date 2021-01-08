@@ -29,6 +29,7 @@
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-paper": "^4.2.0",
     "react-native-reanimated": "^1.13.1",
+    "react-native-render-html": "^5.0.1",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.14.0",
     "react-native-svg": "^12.1.0",

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -6,19 +6,63 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+
   TouchableOpacity,
 } from 'react-native';
+import { API_URL } from '../../config/setting';
 import images from '../../res/img/index';
+import ItemNews from './ItemNews';
 export default class HomeComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      itemData: [],
+    };
   }
+  componentDidMount() {
+    this.getApi();
+  }
+  getApi = () => {
+    const res = fetch(`${API_URL}/News`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then(responseJson => {
+        this.setState({
+          itemData: responseJson,
+        })
+        return responseJson;
+      }).catch(error => {
+        console.log(error)
+      });
+    return res;
+  }
+  
+  showItem = (itemData) => {
+    var result = null;
+    if (itemData.length > 0) {
+      result = itemData.map((item, index) => {
+        return (
+          <ItemNews
+            key={index}
+            TENEVNT={item.TENEVNT}
+            THOIGIANEV={item.THOIGIANEV}
+            MOTA={item.MOTA}
+          />
+        )
+      })
+    }
+    return result;
 
+  }
   render() {
+    const { itemData } = this.state;
     return (
       <View style={styles.container}>
-        <View style={{height: 210, width: '100%'}}>
+        <View style={{ height: 210, width: '100%' }}>
           <View
             style={{
               height: 160,
@@ -30,14 +74,14 @@ export default class HomeComponent extends Component {
               justifyContent: 'space-between',
             }}>
             <Text
-              style={{color: '#262626', fontSize: 20, marginLeft: 15, top: 5}}>
+              style={{ color: '#262626', fontSize: 20, marginLeft: 15, top: 5 }}>
               Trang chủ
             </Text>
             <TouchableOpacity>
               <Image
                 source={images.ic_bell}
                 resizeMode="center"
-                style={{width: 50, height: 30, top: 5}}
+                style={{ width: 50, height: 30, top: 5 }}
               />
             </TouchableOpacity>
           </View>
@@ -55,79 +99,18 @@ export default class HomeComponent extends Component {
           />
         </View>
 
-        <View
-          style={{
-            marginTop: 5,
-            width: '100%',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 15,
-            }}>
-            <Text style={{fontSize: 17}}>Sự kiện trong tuần</Text>
-            <Text style={{fontSize: 17, color: 'red'}}>Xem tất cả</Text>
-          </View>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              height: 200,
-              alignItems: 'center',
-              flexGrow: 1,
-            }}>
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-          </ScrollView>
-        </View>
-        <View
-          style={{
-            marginTop: 5,
-            width: '100%',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: 15,
-            }}>
-            <Text style={{fontSize: 17}}>Sự kiện sắp diễn ra</Text>
-            <Text style={{fontSize: 17, color: 'red'}}>Xem tất cả</Text>
-          </View>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              height: 200,
-              alignItems: 'center',
-              flexGrow: 1,
-            }}>
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-            <Image
-              source={require('../../res/img/sukien_icon.png')}
-              style={{resizeMode: 'contain', height: 200, width: 200}}
-            />
-          </ScrollView>
-        </View>
-      </View>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: 'center',
+
+            flexGrow: 1,
+          }}
+        >
+          {this.showItem(itemData)}
+        </ScrollView>
+
+      </View >
     );
   }
 }
