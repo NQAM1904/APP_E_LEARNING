@@ -43,7 +43,7 @@ const BottomSheet = forwardRef((props, ref) => {
             setShow(false)
         }, time)
     }
-    const renderItem = ({item,index})=>(
+    const renderItem = ({ item, index }) => (
         <View></View>
     )
     return (
@@ -56,6 +56,9 @@ const BottomSheet = forwardRef((props, ref) => {
                     <View style={styles.container}>
                         <TouchableWithoutFeedback>
                             <Animated.View style={[styles.modal, { transform: [{ translateY: animation }] }]}>
+                                <View style={styles.title}>
+                                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{props.placeholder}</Text>
+                                </View>
                                 <FlatList data={props.data} keyExtractor={(item, index) => String(index)} renderItem={renderItem} />
                             </Animated.View>
                         </TouchableWithoutFeedback>
@@ -96,6 +99,13 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * 0.4,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+    },
+    title: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1
     },
 
 })
