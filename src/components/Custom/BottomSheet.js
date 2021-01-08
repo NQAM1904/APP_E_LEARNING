@@ -43,13 +43,11 @@ const BottomSheet = forwardRef((props, ref) => {
             setShow(false)
         }, time)
     }
-    const renderItem = ({ item, index }) => (
-        <View></View>
-    )
+
     return (
         <View>
             <TouchableOpacity style={styles.touch} onPress={() => onShow()}>
-                <Text style={styles.text}>{props.placeholder}</Text>
+                <Text style={styles.text}>{props.value ?? props.placeholder}</Text>
             </TouchableOpacity>
             <Modal visible={show} transparent statusBarTranslucent animationType='fade'>
                 <TouchableWithoutFeedback onPress={onHide}>
@@ -59,7 +57,11 @@ const BottomSheet = forwardRef((props, ref) => {
                                 <View style={styles.title}>
                                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{props.placeholder}</Text>
                                 </View>
-                                <FlatList data={props.data} keyExtractor={(item, index) => String(index)} renderItem={renderItem} />
+                                <FlatList
+                                    data={props.data}
+                                    showsVerticalScrollIndicator={false}
+                                    keyExtractor={(item, index) => String(index)}
+                                    {...props} />
                             </Animated.View>
                         </TouchableWithoutFeedback>
                     </View>

@@ -5,16 +5,17 @@ import {
   StatusBar,
   StyleSheet,
   Image,
+  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import moment from "moment";
 import { API_URL, userData, DataGetSubject } from '../../config/setting';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
-import locale from 'react-native-default-locale';
+
 import images from '../../res/img';
 import ItemLH from './ItemLH';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 export default class LichHocComponent extends Component {
   constructor(props) {
     super(props);
@@ -54,130 +55,133 @@ export default class LichHocComponent extends Component {
   }
 
   async componentDidMount() {
-    const result = await fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+    this.props.navigation.addListener('focus', async () => {
+      // The screen is focused
+      // Call any action
+      const result = await fetch(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
 
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        return result;
       })
-      .catch((error) => {
-        alert('Vui lòng kiểm tra internet!');
-        console.log(error)
-      });
-
-    if (result != undefined) {
-      if (result.Success == true) {
-        console.log(result.Data);
-        let ArrDataMark = []
-        result.Data.map((item) => {
-          var DataStart = new Date();
-          var DataEnd = new Date();
-          let dateNeed = [];
-          dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC1));
-          dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC2));
-          dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC3));
-
-
-          DataStart.setFullYear(parseInt(item.THOIGIANBATDAU.substring(0, 4)), parseInt(item.THOIGIANBATDAU.substring(5, 7)) - 1, parseInt(item.THOIGIANBATDAU.substring(8, 10)));
-          DataEnd.setFullYear(parseInt(item.THOIGIANKETTHUC.substring(0, 4)), parseInt(item.THOIGIANKETTHUC.substring(5, 7)) - 1, parseInt(item.THOIGIANKETTHUC.substring(8, 10)));
-
-          // let TempStart = DataStart.setFullYear(item.THOIGIANBATDAU.substring(0, 4), item.THOIGIANBATDAU.substring(5, 7), item.THOIGIANBATDAU.substring(8, 10));
-          // let TempEnd = DataEnd.setFullYear(item.THOIGIANKETTHUC.substring(0, 4), item.THOIGIANKETTHUC.substring(5, 7), item.THOIGIANKETTHUC.substring(8, 10));
-          // console.log(DataStart, DataEnd)
-          // console.log(DataStart.getDay(), "NCQ")
-
-          // DataStart.setDate(DataStart.getDate() + 1);
-
-          // console.log(DataStart.getDay(), "NCQ")
-
-
-          while (DataStart <= DataEnd) {
-            if (DataStart.getDay() == dateNeed[0] || DataStart.getDay() == dateNeed[1] || DataStart.getDay() == dateNeed[2]) {
-              var tmp = moment(DataStart).format('YYYY-MM-DD').toString();
-
-              ArrDataMark.push({
-                date: tmp, value: {
-                  periods: [
-                    { startingDay: false, endingDay: true, color: '#5f9ea0' },
-                  ],
-                  DataVal: {
-                    BuoiHoc1: item.LICHOC.BUOIHOC1,
-                    BuoiHoc2: item.LICHOC.BUOIHOC2,
-                    BuoiHoc3: item.LICHOC.BUOIHOC3,
-                    CaHoc1: item.LICHOC.CAHOC1,
-                    CaHoc2: item.LICHOC.CAHOC2,
-                    CaHoc3: item.LICHOC.CAHOC3,
-                  }
-                }
-              })
-              DataStart.setDate(DataStart.getDate() + 1);
-            }
-            else {
-              DataStart.setDate(DataStart.getDate() + 1);
-            }
-          }
-
-
+        .then((response) => response.json())
+        .then((result) => {
+          return result;
         })
-        // console.log(this.toObject(ArrDataMark))
-        this.setState({ DataTickArr: ArrDataMark, DataTick: this.toObject(ArrDataMark) })
-      } else {
-        // console.log(result)
-        alert('Dữ liệu nhận về thất bại');
-      }
-    }
-    const language = locale.language;
-    const country = locale.country;
-    console.log(language, country)
+        .catch((error) => {
+          alert('Vui lòng kiểm tra internet!');
+          console.log(error)
+        });
 
-    LocaleConfig.locales["en"] = {
-      monthNames: [
-        "Tháng 1",
-        "Tháng 2",
-        "Tháng 3",
-        "Tháng 4",
-        "Tháng 5",
-        "Tháng 6",
-        "Tháng 7",
-        "Tháng 8",
-        "Tháng 9",
-        "Tháng 10",
-        "Tháng 11",
-        "Tháng 12",
-      ],
-      monthNamesShort: [
-        "Th 1.",
-        "Th 2.",
-        "Th 3",
-        "Th 4",
-        "Th 5",
-        "Th 6",
-        "Th 7.",
-        "Th 8",
-        "Th 9.",
-        "Th 10.",
-        "Th 11.",
-        "Th 12.",
-      ],
-      dayNames: [
-        "Chủ Nhật",
-        "Thứ 2",
-        "Thứ 3",
-        "Thứ 4",
-        "Thứ 5",
-        "Thứ 6",
-        "Thứ 7",
-      ],
-      dayNamesShort: ["CN.", "T2.", "T3.", "T4.", "T5.", "T6.", "T7."],
-      // today: Date.now(),
-    };
-    LocaleConfig.defaultLocale = "en";
+      if (result != undefined) {
+        if (result.Success == true) {
+          console.log(result.Data);
+          let ArrDataMark = []
+          result.Data.map((item) => {
+            var DataStart = new Date();
+            var DataEnd = new Date();
+            let dateNeed = [];
+            dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC1));
+            dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC2));
+            dateNeed.push(this.checkDate(item.LICHOC.BUOIHOC3));
+
+
+            DataStart.setFullYear(parseInt(item.THOIGIANBATDAU.substring(0, 4)), parseInt(item.THOIGIANBATDAU.substring(5, 7)) - 1, parseInt(item.THOIGIANBATDAU.substring(8, 10)));
+            DataEnd.setFullYear(parseInt(item.THOIGIANKETTHUC.substring(0, 4)), parseInt(item.THOIGIANKETTHUC.substring(5, 7)) - 1, parseInt(item.THOIGIANKETTHUC.substring(8, 10)));
+
+            // let TempStart = DataStart.setFullYear(item.THOIGIANBATDAU.substring(0, 4), item.THOIGIANBATDAU.substring(5, 7), item.THOIGIANBATDAU.substring(8, 10));
+            // let TempEnd = DataEnd.setFullYear(item.THOIGIANKETTHUC.substring(0, 4), item.THOIGIANKETTHUC.substring(5, 7), item.THOIGIANKETTHUC.substring(8, 10));
+            // console.log(DataStart, DataEnd)
+            // console.log(DataStart.getDay(), "NCQ")
+
+            // DataStart.setDate(DataStart.getDate() + 1);
+
+            // console.log(DataStart.getDay(), "NCQ")
+
+
+            while (DataStart <= DataEnd) {
+              if (DataStart.getDay() == dateNeed[0] || DataStart.getDay() == dateNeed[1] || DataStart.getDay() == dateNeed[2]) {
+                var tmp = moment(DataStart).format('YYYY-MM-DD').toString();
+
+                ArrDataMark.push({
+                  date: tmp, value: {
+                    periods: [
+                      { startingDay: false, endingDay: true, color: '#5f9ea0' },
+                    ],
+                    DataVal: {
+                      BuoiHoc1: item.LICHOC.BUOIHOC1,
+                      BuoiHoc2: item.LICHOC.BUOIHOC2,
+                      BuoiHoc3: item.LICHOC.BUOIHOC3,
+                      CaHoc1: item.LICHOC.CAHOC1,
+                      CaHoc2: item.LICHOC.CAHOC2,
+                      CaHoc3: item.LICHOC.CAHOC3,
+                    }
+                  }
+                })
+                DataStart.setDate(DataStart.getDate() + 1);
+              }
+              else {
+                DataStart.setDate(DataStart.getDate() + 1);
+              }
+            }
+
+
+          })
+          // console.log(this.toObject(ArrDataMark))
+          this.setState({ DataTickArr: ArrDataMark, DataTick: this.toObject(ArrDataMark) })
+        } else {
+          // console.log(result)
+          alert('Dữ liệu nhận về thất bại');
+        }
+      }
+
+
+      LocaleConfig.locales["en"] = {
+        monthNames: [
+          "Tháng 1",
+          "Tháng 2",
+          "Tháng 3",
+          "Tháng 4",
+          "Tháng 5",
+          "Tháng 6",
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
+        ],
+        monthNamesShort: [
+          "Th 1.",
+          "Th 2.",
+          "Th 3",
+          "Th 4",
+          "Th 5",
+          "Th 6",
+          "Th 7.",
+          "Th 8",
+          "Th 9.",
+          "Th 10.",
+          "Th 11.",
+          "Th 12.",
+        ],
+        dayNames: [
+          "Chủ Nhật",
+          "Thứ 2",
+          "Thứ 3",
+          "Thứ 4",
+          "Thứ 5",
+          "Thứ 6",
+          "Thứ 7",
+        ],
+        dayNamesShort: ["CN.", "T2.", "T3.", "T4.", "T5.", "T6.", "T7."],
+        // today: Date.now(),
+      };
+      LocaleConfig.defaultLocale = "en";
+    });
+
 
 
 
