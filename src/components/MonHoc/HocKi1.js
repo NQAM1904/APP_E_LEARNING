@@ -13,11 +13,16 @@ import { API_URL, userData, DataGetSubject } from '../../config/setting';
 export default class HocKi1 extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, DataFull: new Array() };
+    this.state = {
+      isLoading: true,
+      DataFull: new Array(),
+      dataDiem: []
+    };
   }
   componentDidMount() {
     // this.getData();
     this.getData();
+    this.getDataDiem()
   }
   getData = async () => {
     let data = {
@@ -43,13 +48,27 @@ export default class HocKi1 extends Component {
 
     if (result != undefined) {
       if (result.Success == true) {
-        console.log(result.Data);
+        // console.log(result.Data);
         this.setState({ DataFull: result.Data, isLoading: false });
       } else {
         alert('Dữ liệu nhận về thất bại');
       }
     }
   };
+  getDataDiem = () => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    fetch(API_URL+"/Diem?IDSINHVIEN=" + `${userData.IDSTUDENT}`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        this.setState({dataDiem:result.Data})
+      }
+        )
+      .catch(error => console.log('error', error));
+  }
   _listEmptyComponent = () => {
     return (
       <View
@@ -61,56 +80,61 @@ export default class HocKi1 extends Component {
       </View>
     );
   };
-  renderItem = ({ item }) => (
-    <View
-      style={{
-        width: Dimensions.get('window').width / 2,
-
-        padding: 10,
-      }}>
+  renderItem = ({ item }) => {
+    const result = this.state.dataDiem.find((e) => e.IDMONHOC === item.IDMONHOC)
+    return (
       <View
         style={{
-          backgroundColor: 'white',
+          width: Dimensions.get('window').width / 2,
 
-          borderRadius: 15,
-          padding: 13,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 8,
-          },
-          shadowOpacity: 0.46,
-          shadowRadius: 11.14,
-
-          elevation: 17,
+          padding: 10,
         }}>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            borderBottomWidth: 1,
-            borderBottomColor: '#EFEFEF',
+            backgroundColor: 'white',
+            borderRadius: 15,
+            padding: 13,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 8,
+            },
+            shadowOpacity: 0.46,
+            shadowRadius: 11.14,
+
+            elevation: 17,
           }}>
-          <Text style={{ width: '80%' }} numberOfLines={1}>
-            {item.TENMONHOC}
-          </Text>
-          <Image
-            style={{ resizeMode: 'contain', height: 21, width: 21 }}
-            source={require('../../res/img/heart_check.png')}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text>ENCC 101</Text>
-          <View style={{ alignItems: 'flex-end' }}>
-            <Text>{item.TINCHI}(3.0)</Text>
-            <TouchableOpacity style={{ marginTop: 10 }}>
-              <Text style={{ color: '#1890FF', fontSize: 16 }}>Sửa điểm</Text>
-            </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              borderBottomWidth: 1,
+              borderBottomColor: '#EFEFEF',
+            }}>
+            <Text style={{ width: '80%' }} numberOfLines={1}>
+              {item.TENMONHOC}
+            </Text>
+            <Image
+              style={{ resizeMode: 'contain', height: 21, width: 21 }}
+              source={require('../../res/img/heart_check.png')}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text>ENCC 101</Text>
+            <View style={{ alignItems: 'flex-end' }}>
+              <Text>{item.TINCHI + '/' + `${result ? result?.STCDAT : 0}`} </Text>
+
+              {result?.DIEMTB ? <Text>{result.DIEMTB}.0</Text> : <TouchableOpacity style={{ marginTop: 10 }}>
+                <Text style={{ color: '#1890FF', fontSize: 16 }}>Sửa điểm</Text>
+              </TouchableOpacity>
+            }
+            
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
   render() {
     const { isLoading } = this.state;
     const loading =
@@ -122,16 +146,16 @@ export default class HocKi1 extends Component {
           animation="fade"
         />
       ) : (
-          <View style={{ flex: 1 }}>
-            <FlatList
-              ListEmptyComponent={this._listEmptyComponent}
-              data={this.state.DataFull}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index}
-              numColumns={2}
-            />
-          </View>
-        );
+        <View style={{ flex: 1 }}>
+          <FlatList
+            ListEmptyComponent={this._listEmptyComponent}
+            data={this.state.DataFull}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index}
+            numColumns={2}
+          />
+        </View>
+      );
     return <View style={styles.container}>{loading}</View>;
   }
 }

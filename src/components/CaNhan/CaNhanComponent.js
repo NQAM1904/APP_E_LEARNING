@@ -52,7 +52,7 @@ export default class CaNhanComponent extends Component {
       });
     if (result != undefined) {
       if (result.Success == true) {
-        console.log(result);
+        // console.log(result);
         this.setState({
           Nienkhoa: result.Data.NIENKHOANAME,
           Mssv: result.Data.MSSV,

@@ -166,7 +166,7 @@ class DangKyMH extends Component {
                     date={this.state.endDate}
                     mode="date"
                     format="DD-MM-YYYY"
-                    placeholder="Chọn ngày bắt đầu"
+                    placeholder="Chọn ngày kết thúc"
                     minDate={new Date()}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"

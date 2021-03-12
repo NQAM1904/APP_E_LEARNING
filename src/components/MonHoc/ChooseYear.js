@@ -31,7 +31,7 @@ export default class ChooseYear extends Component {
       });
     if (result != undefined) {
       if (result.Success == true) {
-        console.log(result);
+        // console.log(result);
         this.setState({ NamHocData: result.Data });
       } else {
         alert('Dữ liệu nhận về thất bại');

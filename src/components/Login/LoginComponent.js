@@ -19,8 +19,8 @@ export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'sinhvien',
+      password: '123',
       icon: true,
       isLoading: false,
       nameIcon: 'icon_eye_no',
