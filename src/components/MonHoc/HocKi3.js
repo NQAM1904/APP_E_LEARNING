@@ -43,7 +43,6 @@ export default class HocKi3 extends Component {
 
     if (result != undefined) {
       if (result.Success == true) {
-        console.log(result.Data);
         this.setState({DataFull: result.Data, isLoading: false});
       } else {
         alert('Dữ liệu nhận về thất bại');

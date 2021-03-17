@@ -28,8 +28,6 @@ export default class LichHocComponent extends Component {
     };
   }
   getMonHoc = (day) => {
-    console.log(day)
-    console.log(`${API_URL}/GetTKB?IDSINHVIEN=${userData.IDSTUDENT}&Day=${day}`)
     const result = fetch(`${API_URL}/GetMonHocByDay?IDSINHVIEN=${userData.IDSTUDENT}&Day=${day}`, {
       method: 'GET',
       headers: {
@@ -40,7 +38,6 @@ export default class LichHocComponent extends Component {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result)
         this.setState({
           selectItem: result.Data,
           message: result.Message
@@ -49,7 +46,6 @@ export default class LichHocComponent extends Component {
       })
       .catch((error) => {
         alert('Vui lòng kiểm tra internet!');
-        console.log(error)
       });
     return result;
   }
@@ -72,12 +68,10 @@ export default class LichHocComponent extends Component {
         })
         .catch((error) => {
           alert('Vui lòng kiểm tra internet!');
-          console.log(error)
         });
 
       if (result != undefined) {
         if (result.Success == true) {
-          console.log(result.Data);
           let ArrDataMark = []
           result.Data.map((item) => {
             var DataStart = new Date();

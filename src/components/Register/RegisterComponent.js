@@ -68,7 +68,6 @@ export default class RegisterComponent extends Component {
         return result;
       })
       .catch((error) => {
-        console.log(error.Message);
       });
 
     if (result != undefined) {
@@ -161,7 +160,6 @@ export default class RegisterComponent extends Component {
         return result;
       })
       .catch((error) => {
-        console.log(error);
       });
     // console.log(result);
     return result;

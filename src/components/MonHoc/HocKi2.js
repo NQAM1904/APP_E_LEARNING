@@ -40,10 +40,8 @@ export default class HocKi2 extends Component {
       .catch((error) => {
         alert('Vui lòng kiểm tra internet!');
       });
-    console.log('222', result);
     if (result != undefined) {
       if (result.Success == true) {
-        console.log(result.Data);
         this.setState({DataFull: result.Data, isLoading: false});
       } else {
         alert('Dữ liệu nhận về thất bại');
