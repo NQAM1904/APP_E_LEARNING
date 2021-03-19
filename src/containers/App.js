@@ -15,6 +15,7 @@ import ChooseYear from '../components/MonHoc/ChooseYear';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DetailtNew from '../components/Home/DetailtNew';
 import AlertAnimated from '../components/Custom/AlertAnimated';
+import ChiTietLH from '../components/LichHoc/ChiTietLH';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const MainStackScreen = () => (
       <Stack.Screen name="DangKyMH" component={DangKyMH} />
       <Stack.Screen name="Tab" component={MainTabScreen} options={{}} />
       <Stack.Screen name="DetailtNew" component={DetailtNew} options={{}} />
+      <Stack.Screen name="ChiTietLH" component={ChiTietLH} options={{}} />
     </Stack.Navigator>
     <AlertAnimated />
   </NavigationContainer>
