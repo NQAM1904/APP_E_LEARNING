@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {StatusBar, Text, View} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Platform, StatusBar, Text, View } from 'react-native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginContainer from '../containers/Login/LoginContainer';
 import HomeContainer from '../containers/Home/HomeContainer';
 import RegisterComponent from '../components/Register/RegisterComponent';
@@ -27,9 +27,21 @@ const MainStackScreen = () => (
   <NavigationContainer>
     <StatusBar barStyle="light-content" backgroundColor="#820014" />
     <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
+      screenOptions={
+        ({
+          headerShown: false,
+          cardStyle: {
+            backgroundColor: 'white',
+          },
+        },
+          Platform.OS === 'android'
+            ? {
+              ...TransitionPresets.SlideFromRightIOS,
+              gestureEnabled: true,
+              headerShown: false,
+            }
+            : { headerShown: false })
+      }
       initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginContainer} options={{}} />
       <Stack.Screen
@@ -75,7 +87,7 @@ const MainTabScreen = () => {
         component={HomeContainer}
         options={{
           tabBarLabel: 'Trang Chủ',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
         }}
@@ -85,7 +97,7 @@ const MainTabScreen = () => {
         component={LichHocComponent}
         options={{
           tabBarLabel: 'Lịch Học',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="calendar-alt" color={color} size={size} />
           ),
         }}
@@ -95,7 +107,7 @@ const MainTabScreen = () => {
         component={MHStack}
         options={{
           tabBarLabel: 'Môn Học',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="book-reader" color={color} size={size} />
           ),
         }}
@@ -105,7 +117,7 @@ const MainTabScreen = () => {
         component={ProfileComponent}
         options={{
           tabBarLabel: 'Cá Nhân',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="user-alt" color={color} size={size} />
           ),
         }}

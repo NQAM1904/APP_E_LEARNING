@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import BottomSheet from '../Custom/BottomSheet';
 import Header from '../Custom/Header';
-import {API_URL, userData} from '../../config/setting';
+import { API_URL, userData } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
 
@@ -42,7 +42,7 @@ class DangKyMH extends Component {
         CAHOC3: null,
       },
     });
-
+    console.log(raw);
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
@@ -86,57 +86,57 @@ class DangKyMH extends Component {
           alignItems: 'center',
         }}
         onPress={onPress}>
-        <Text style={{fontSize: 20}}>{title}</Text>
+        <Text style={{ fontSize: 20 }}>{title}</Text>
         {state === item && (
           <Icon name="check-circle" solid color="blue" size={20} />
         )}
       </TouchableOpacity>
     );
   };
-  renderMH = ({item, index}) => (
+  renderMH = ({ item, index }) => (
     <>
       {this.ItemRender(
         item.TENMONHOC,
-        () => this.setState({itemMH: item}),
+        () => this.setState({ itemMH: item }),
         this.state.itemMH,
         item,
       )}
     </>
   );
-  renderNGAY = ({item, index}) => (
+  renderNGAY = ({ item, index }) => (
     <>
       {this.ItemRender(
         item.title,
-        () => this.setState({itemNGAY: item}),
+        () => this.setState({ itemNGAY: item }),
         this.state.itemNGAY,
         item,
       )}
     </>
   );
-  renderCA = ({item, index}) => (
+  renderCA = ({ item, index }) => (
     <>
       {this.ItemRender(
         item.title,
-        () => this.setState({itemCA: item}),
+        () => this.setState({ itemCA: item }),
         this.state.itemCA,
         item,
       )}
     </>
   );
   handleChangestartedDate = (startedDate) => {
-    this.setState({startDate: startedDate});
+    this.setState({ startDate: startedDate });
   };
   handleChangeEndedDate = (endedDate) => {
-    this.setState({endDate: endedDate});
+    this.setState({ endDate: endedDate });
   };
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           title="Đăng ký môn học"
           onPressBackButton={() => this.props.navigation.goBack()}
         />
-        <Text style={{margin: 10}}>Môn học</Text>
+        <Text style={{ margin: 10 }}>Môn học</Text>
         <BottomSheet
           placeholder="Chọn Môn Học"
           data={this.state.data}
@@ -156,7 +156,7 @@ class DangKyMH extends Component {
           value={this.state.itemCA.title}
         />
         <DatePicker
-          style={{marginHorizontal: 16, width: '95%', marginTop: 16}}
+          style={{ marginHorizontal: 16, width: '95%', marginTop: 16 }}
           date={this.state.startDate}
           mode="date"
           format="DD-MM-YYYY"
@@ -178,7 +178,7 @@ class DangKyMH extends Component {
           }}
         />
         <DatePicker
-          style={{marginHorizontal: 16, width: '95%', marginTop: 16}}
+          style={{ marginHorizontal: 16, width: '95%', marginTop: 16 }}
           date={this.state.endDate}
           mode="date"
           format="DD-MM-YYYY"
@@ -212,7 +212,7 @@ class DangKyMH extends Component {
             borderRadius: 20,
             alignSelf: 'center',
           }}>
-          <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
             Lưu
           </Text>
         </TouchableOpacity>
@@ -222,19 +222,19 @@ class DangKyMH extends Component {
 }
 export default DangKyMH;
 const CA = [
-  {id: 1, title: `Ca 1 (tiết 1,2,3): từ 06g45' đến 09g00'`},
-  {id: 2, title: `Ca 2 (tiết 4,5,6): từ 09g20' đến 11g35'`},
-  {id: 3, title: `Ca 3 (tiết 7,8,9): từ 12g30' đến 14g45'`},
-  {id: 4, title: `Ca 4 (tiết 10,11,12): từ 15g05' đến 17g20'`},
-  {id: 5, title: `Ca 5 (tiết 13,14,15): từ 18g00' đến 20g15'`},
+  { id: 1, title: `Ca 1 (tiết 1,2,3): từ 06g45' đến 09g00'` },
+  { id: 2, title: `Ca 2 (tiết 4,5,6): từ 09g20' đến 11g35'` },
+  { id: 3, title: `Ca 3 (tiết 7,8,9): từ 12g30' đến 14g45'` },
+  { id: 4, title: `Ca 4 (tiết 10,11,12): từ 15g05' đến 17g20'` },
+  { id: 5, title: `Ca 5 (tiết 13,14,15): từ 18g00' đến 20g15'` },
 ];
 
 const DAY = [
-  {id: 1, title: `Thứ 2`},
-  {id: 2, title: `Thứ 3`},
-  {id: 3, title: `Thứ 4`},
-  {id: 4, title: `Thứ 5`},
-  {id: 5, title: `Thứ 6`},
-  {id: 6, title: `Thứ 7`},
-  {id: 7, title: `Chủ Nhật`},
+  { id: 1, title: `Thứ 2` },
+  { id: 2, title: `Thứ 3` },
+  { id: 3, title: `Thứ 4` },
+  { id: 4, title: `Thứ 5` },
+  { id: 5, title: `Thứ 6` },
+  { id: 6, title: `Thứ 7` },
+  { id: 7, title: `Chủ Nhật` },
 ];

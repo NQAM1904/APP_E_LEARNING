@@ -1,5 +1,5 @@
-import {Sizes} from '@dungdang/react-native-basic';
-import React, {Component} from 'react';
+import { Sizes } from '@dungdang/react-native-basic';
+import React, { Component } from 'react';
 import {
   View,
   TextInput,
@@ -26,7 +26,7 @@ export default class FloatingLabelInput extends Component {
   }
 
   handleFocus = () => {
-    this.setState({isFocused: true});
+    this.setState({ isFocused: true });
     Animated.timing(this.slideLabel, {
       toValue: Sizes.h32,
       duration: 200,
@@ -37,7 +37,7 @@ export default class FloatingLabelInput extends Component {
   };
 
   handleBlur = () => {
-    this.setState({isFocused: false});
+    this.setState({ isFocused: false });
   };
 
   componentDidUpdate() {
@@ -49,8 +49,8 @@ export default class FloatingLabelInput extends Component {
   }
 
   render() {
-    const {title, ...props} = this.props;
-    const {isFocused} = this.state;
+    const { title, ...props } = this.props;
+    const { isFocused } = this.state;
     const labelStyle = {
       color: '#8C8C8C',
       padding: 0,
@@ -75,7 +75,7 @@ export default class FloatingLabelInput extends Component {
       <View
         style={[
           styles.container,
-          this.props.isChangePassword && isFocused && {borderColor: '#1890FF'},
+          this.props.isChangePassword && isFocused && { borderColor: '#1890FF' },
           this.props.style,
         ]}>
         <Animated.Text style={labelStyle}>{title}</Animated.Text>

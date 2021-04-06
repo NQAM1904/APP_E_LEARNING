@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,33 +14,28 @@ import images from '../../res/img/index';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import Spinner from 'react-native-loading-spinner-overlay';
-import {userData, API_URL} from '../../config/setting';
+import { userData, API_URL } from '../../config/setting';
 export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      icon: true,
+      username: 'test',
+      password: '123',
+      showpass: true,
       isLoading: false,
-      nameIcon: 'icon_eye_no',
+
     };
   }
 
-  onHandleChange = () => {
-    this.setState({
-      icon: !this.state.icon,
-      nameIcon: !this.state.nameIcon ? 'icon_eye_no' : 'icon_eye',
-    });
-  };
 
-  componentDidMount = () => {};
+
+  componentDidMount = () => { };
 
   onLogin = async () => {
-    this.setState({isLoading: true});
-    const {username, password} = this.state;
+    this.setState({ isLoading: true });
+    const { username, password } = this.state;
     if (username == '' || password == '') {
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
       return;
     }
     let data = {
@@ -78,18 +73,18 @@ export default class LoginComponent extends Component {
         userData.TOKEN = result.Data.TOKEN;
 
         setTimeout(() => {
-          this.setState({isLoading: false});
+          this.setState({ isLoading: false });
           this.props.navigation.navigate('Tab');
         }, 1000);
       } else {
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
         alert(result.Message);
       }
     }
   };
 
   render() {
-    const {username, password, icon, nameIcon, isLoading} = this.state;
+    const { username, password, showpass, isLoading } = this.state;
     const loading = isLoading === true && (
       <Spinner
         visible={isLoading}
@@ -117,7 +112,7 @@ export default class LoginComponent extends Component {
             }}
             source={require('../../res/img/logo_login.png')}
           />
-          <View style={{width: '90%', alignSelf: 'center'}}>
+          <View style={{ width: '90%', alignSelf: 'center' }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -138,10 +133,10 @@ export default class LoginComponent extends Component {
               <TextInput
                 placeholder="Tài khoản"
                 value={username}
-                onChangeText={(username) => this.setState({username: username})}
-                style={{flex: 0.8, fontSize: 18}}
+                onChangeText={(username) => this.setState({ username: username })}
+                style={{ flex: 0.8, fontSize: 18 }}
               />
-              <View style={{flex: 0.1}} />
+              <View style={{ flex: 0.1 }} />
             </View>
             <View
               style={{
@@ -162,30 +157,37 @@ export default class LoginComponent extends Component {
               />
               <TextInput
                 placeholder="Mật khẩu"
-                secureTextEntry={icon}
+                secureTextEntry={showpass}
                 value={password}
-                onChangeText={(password) => this.setState({password: password})}
-                style={{flex: 0.8, fontSize: 18}}
+                onChangeText={(password) => this.setState({ password: password })}
+                style={{ flex: 1, fontSize: 18 }}
               />
-              <Image
-                style={{
-                  resizeMode: 'contain',
-                  width: '6%',
-                  flex: 0.1,
-                  height: (windowWidth / 100) * 6,
-                  alignSelf: 'center',
-                }}
-                source={icon ? images.icon_eye : images.icon_eye_no}
-                onPress={this.onHandleChange}
-              />
+              <TouchableOpacity onPress={() => {
+                this.setState({
+                  showpass: !this.state.showpass
+                }, console.log(this.state.showpass));
+              }}>
+                <Image
+                  style={{
+                    resizeMode: 'contain',
+                    width: 24,
+                    height: 24,
+
+                    flex: 1
+                  }}
+                  source={showpass ? images.icon_eye : images.icon_eye_no}
+                />
+              </TouchableOpacity>
             </View>
-            <View style={{alignItems: 'flex-end'}}>
-              <Text
-                style={{color: '#1890FF', fontSize: 17, fontWeight: 'bold'}}>
-                Quên mật khẩu
+            <View style={{ alignItems: 'flex-end' }}>
+              <TouchableOpacity onPress={() => alert('Tính năng đang cập nhật')}>
+                <Text
+                  style={{ color: '#1890FF', fontSize: 17, fontWeight: 'bold' }}>
+                  Quên mật khẩu
               </Text>
+              </TouchableOpacity>
             </View>
-            <View style={{marginTop: 18}}>
+            <View style={{ marginTop: 18 }}>
               <TouchableOpacity
                 onPress={() => this.onLogin()}
                 style={{
@@ -197,7 +199,7 @@ export default class LoginComponent extends Component {
                   borderRadius: 15,
                 }}>
                 <Text
-                  style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
+                  style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>
                   ĐĂNG NHẬP
                 </Text>
               </TouchableOpacity>
@@ -217,7 +219,7 @@ export default class LoginComponent extends Component {
                     height: 0,
                   }}
                 />
-                <Text style={{color: '#8C8C8C'}}>Hoặc</Text>
+                <Text style={{ color: '#8C8C8C' }}>Hoặc</Text>
                 <View
                   style={{
                     borderTopColor: '#8C8C8C',
@@ -241,7 +243,7 @@ export default class LoginComponent extends Component {
                   borderRadius: 15,
                 }}>
                 <Text
-                  style={{color: '#1890FF', fontWeight: 'bold', fontSize: 18}}>
+                  style={{ color: '#1890FF', fontWeight: 'bold', fontSize: 18 }}>
                   ĐĂNG KÝ
                 </Text>
               </TouchableOpacity>

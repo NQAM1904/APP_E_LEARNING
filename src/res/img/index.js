@@ -12,6 +12,10 @@ const images = {
   Avatar: require('./ava.jpg'),
   plus: require('./icon_UP.png'),
   down: require('./icon_UP.png'),
+  ic_check: require('./ic_check.png'),
+  ic_close: require('./ic_close.png'),
+  ic_trash: require('./ic_trash.png'),
+  ic_user: require('./ic_user.png'),
 };
 
 export default images;

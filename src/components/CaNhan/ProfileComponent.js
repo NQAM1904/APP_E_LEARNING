@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -9,12 +9,12 @@ import {
   Button,
 } from 'react-native';
 import images from '../../res/img/index';
-import {userData} from '../../config/setting';
+import { userData } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 class ProfileComponent extends Component {
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View
           style={{
             height: 150,
@@ -28,14 +28,13 @@ class ProfileComponent extends Component {
             }}>
             <View
               style={{
-                padding: 20,
-
+                // padding: 20,
                 flex: 1,
               }}>
               <Image
-                source={images.Avatar}
+                source={images.ic_user}
                 resizeMode={'contain'}
-                style={{width: 100, height: 100, borderRadius: 400 / 2}}
+                style={{ width: 150, height: 150, borderRadius: 400 / 2 }}
               />
             </View>
             <Text
@@ -54,7 +53,7 @@ class ProfileComponent extends Component {
           onPress={() => this.props.navigation.navigate('CaNhan')}>
           <Icon name="user-alt" size={20} />
           <View style={styles.viewText}>
-            <Text style={{marginLeft: 15}}>Thông tin cá nhân</Text>
+            <Text style={{ marginLeft: 15 }}>Thông tin cá nhân</Text>
           </View>
           <Icon name="chevron-right" size={20} />
         </TouchableOpacity>
@@ -64,7 +63,7 @@ class ProfileComponent extends Component {
           style={styles.customMenu}>
           <Icon name="lock" size={20} />
           <View style={styles.viewText}>
-            <Text style={{marginLeft: 15}}>Đổi mật khẩu</Text>
+            <Text style={{ marginLeft: 15 }}>Đổi mật khẩu</Text>
           </View>
           <Icon name="chevron-right" size={20} />
         </TouchableOpacity>
@@ -74,7 +73,7 @@ class ProfileComponent extends Component {
           style={styles.customMenu}>
           <Icon name="reply" size={20} />
           <View style={styles.viewText}>
-            <Text style={{marginLeft: 15}}>Đăng xuất</Text>
+            <Text style={{ marginLeft: 15 }}>Đăng xuất</Text>
           </View>
           <Icon name="chevron-right" size={20} />
         </TouchableOpacity>

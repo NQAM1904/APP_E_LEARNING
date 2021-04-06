@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,7 @@ import TextInputAnimated from '../Custom/TextInputAnimated';
 import images from '../../res/img/index';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-import {userData, API_URL} from '../../config/setting';
+import { userData, API_URL } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 export default class CaNhanComponent extends Component {
   constructor(props) {
@@ -66,7 +66,7 @@ export default class CaNhanComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{height: 60, width: '100%'}}>
+        <View style={{ height: 60, width: '100%' }}>
           <View
             style={{
               height: 60,
@@ -76,7 +76,7 @@ export default class CaNhanComponent extends Component {
               alignItems: 'center',
             }}>
             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <Icon name="angle-left" size={20} style={{padding: 14}} />
+              <Icon name="angle-left" size={20} style={{ padding: 14 }} />
             </TouchableOpacity>
             <Text
               style={{
@@ -94,82 +94,82 @@ export default class CaNhanComponent extends Component {
             flex: 1,
             justifyContent: 'center',
           }}>
-          <View style={{width: '90%', alignSelf: 'center'}}>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '100%'}}>
+          <View style={{ width: '90%', alignSelf: 'center' }}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '100%' }}>
                 <TextInputAnimated
                   style={{
                     marginRight: 10,
                     borderColor: '#8C8C8C',
                   }}
                   title="Tên"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.fullName}
-                  onChangeText={(text) => this.setState({fullName: text})}
+                  onChangeText={(text) => this.setState({ fullName: text })}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '50%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     marginRight: 10,
                     borderColor: '#8C8C8C',
                   }}
                   title="Số điện thoại"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.phone}
                   keyboardType="numeric"
-                  onChangeText={(text) => this.setState({phone: text})}
+                  onChangeText={(text) => this.setState({ phone: text })}
                 />
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Mã số sinh viên"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.Mssv}
                   keyboardType="numeric"
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '50%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     marginRight: 10,
                     borderColor: '#8C8C8C',
                   }}
                   title="Niên khoá"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.Nienkhoa}
-                  onChangeText={(text) => this.setState({Nienkhoa: text})}
+                  onChangeText={(text) => this.setState({ Nienkhoa: text })}
                 />
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Ngành"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.Nganh}
-                  onChangeText={(text) => this.setState({Nganh: text})}
+                  onChangeText={(text) => this.setState({ Nganh: text })}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '100%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '100%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Tài khoản"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={this.state.valUserName}
-                  onChangeText={(text) => this.setState({valUserName: text})}
+                  onChangeText={(text) => this.setState({ valUserName: text })}
                 />
               </View>
             </View>
