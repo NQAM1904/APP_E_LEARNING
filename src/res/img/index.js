@@ -16,6 +16,7 @@ const images = {
   ic_close: require('./ic_close.png'),
   ic_trash: require('./ic_trash.png'),
   ic_user: require('./ic_user.png'),
+
 };
 
 export default images;

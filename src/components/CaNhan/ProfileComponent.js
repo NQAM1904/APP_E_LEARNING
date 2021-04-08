@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 
 import {
   View,
@@ -7,12 +7,61 @@ import {
   Image,
   TouchableOpacity,
   Button,
+  Modal,
+  TouchableWithoutFeedback
 } from 'react-native';
 import images from '../../res/img/index';
 import { userData } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { color } from '../../res/color';
+import TextField from '../Custom/TextField';
 class ProfileComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      popupChangePassword: false,
+      txtPasscode: '',
+      txtNewPass: '',
+      NewPassword: ''
+    }
+    this.txtPasscodeRef = React.createRef();
+    this.txtNewPasscodeRef = React.createRef();
+    this.txtPasscodeCheckRef = React.createRef();
+  }
+  onSubmit = () => {
+    const { txtPasscode, txtNewPass, NewPassword } = this.state;
+
+    if (txtPasscode == '') {
+      this.txtPasscodeRef.current.error('Vui lòng không để trống');
+    } else if (txtNewPass == '') {
+      this.txtNewPasscodeRef.current.error('Vui lòng không để trống');
+    } else if (NewPassword == '') {
+      this.txtPasscodeCheckRef.current.error('Vui lòng không để trống');
+    }
+    else {
+      this.setState({
+        txtPasscode: '',
+      });
+      this.checkPassCode();
+    }
+  }
+  checkPassCode = () => {
+    const { txtPasscode, txtNewPass, NewPassword } = this.state;
+    if (txtNewPass !== NewPassword) {
+      this.setState(
+        {
+          AlertError: false,
+          snackBarMessage: 'Mật khẩu xác nhận không chính xác!',
+        },
+        () => {
+          this.bottomSnackBar.current.showBottomSnackBar();
+        },
+      );
+      return;
+    }
+  }
   render() {
+    const { popupChangePassword } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View
@@ -59,7 +108,9 @@ class ProfileComponent extends Component {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => alert('Updatting')}
+          onPress={() => {
+            this.setState({ popupChangePassword: true })
+          }}
           style={styles.customMenu}>
           <Icon name="lock" size={20} />
           <View style={styles.viewText}>
@@ -77,6 +128,94 @@ class ProfileComponent extends Component {
           </View>
           <Icon name="chevron-right" size={20} />
         </TouchableOpacity>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={popupChangePassword}>
+          <TouchableWithoutFeedback onPress={() => { this.setState({ popupChangePassword: false }) }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'flex-end',
+                backgroundColor: '#00000036',
+              }}>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+
+                  <View style={{
+                    backgroundColor: '#fff',
+                    padding: 30
+                  }}>
+                    <Text
+                      style={{ textAlign: 'center', fontSize: 24, marginBottom: 20 }}
+                    >Thay đôi mật khẩu</Text>
+                    <TextField
+                      ref={this.txtPasscodeRef}
+                      onFocus={() => {
+                        this.focusIMG();
+                      }}
+                      showEye={true}
+                      onBlur={() => this.notFocusIMG()}
+                      label="Nhập mật khẩu cũ"
+                      numeric
+                      secureTextEntry
+                      keyboardAppearance={color.keyboardAppearance}
+                      value={this.state.txtPasscode}
+                      onChangeText={(text) => {
+                        this.setState({
+                          txtPasscode: text,
+                        });
+                      }}
+                    />
+                    <TextField
+                      ref={this.txtNewPasscodeRef}
+                      onFocus={() => {
+                        this.focusIMG();
+                      }}
+                      showEye={true}
+                      onBlur={() => this.notFocusIMG()}
+                      label="Nhập mật khẩu mới "
+                      numeric
+                      secureTextEntry
+                      keyboardAppearance={color.keyboardAppearance}
+                      value={this.state.txtNewPass}
+                      onChangeText={(text) => {
+                        this.setState({
+                          txtNewPass: text,
+                        });
+                      }}
+                    />
+                    <TextField
+                      ref={this.txtPasscodeCheckRef}
+                      onFocus={() => {
+                        this.focusIMG();
+                      }}
+                      showEye={true}
+                      onBlur={() => this.notFocusIMG()}
+                      label="Xác nhận mật khẩu"
+                      numeric
+                      secureTextEntry
+                      keyboardAppearance={color.keyboardAppearance}
+                      value={this.state.NewPassword}
+                      onChangeText={(text) => {
+                        this.setState({
+                          NewPassword: text,
+                        });
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={styles.btnDon}
+                      onPress={() => this.onSubmit()}
+                    >
+                      <Text style={{ color: '#fff', fontSize: 22, textAlign: 'center' }}>Xác nhận</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
       </View>
     );
   }
@@ -99,5 +238,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 30,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  btnDon: {
+    backgroundColor: color.normal,
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  }
+
 });
 export default ProfileComponent;
