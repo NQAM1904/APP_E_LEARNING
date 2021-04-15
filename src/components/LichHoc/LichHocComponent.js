@@ -230,7 +230,7 @@ export default class LichHocComponent extends Component {
           return (
             <ItemLH
               onPress={() =>
-                this.props.navigation.replace('ChiTietLH', { item })
+                this.props.navigation.navigate('ChiTietLH', { item })
               }
               key={index}
               CAHOC={
