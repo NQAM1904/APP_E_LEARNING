@@ -11,10 +11,13 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import images from '../../res/img/index';
-import { userData } from '../../config/setting';
+import { API_URL, userData } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { color } from '../../res/color';
 import TextField from '../Custom/TextField';
+import { connect } from 'react-redux';
+import { showAlertAction } from '../../redux/action/showAlertAction';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 class ProfileComponent extends Component {
   constructor(props) {
     super(props);
@@ -41,23 +44,52 @@ class ProfileComponent extends Component {
     else {
       this.setState({
         txtPasscode: '',
+        txtNewPass: '',
+        NewPassword: '',
+        popupChangePassword: false
       });
       this.checkPassCode();
+
     }
   }
   checkPassCode = () => {
     const { txtPasscode, txtNewPass, NewPassword } = this.state;
     if (txtNewPass !== NewPassword) {
-      this.setState(
-        {
-          AlertError: false,
-          snackBarMessage: 'Mật khẩu xác nhận không chính xác!',
-        },
-        () => {
-          this.bottomSnackBar.current.showBottomSnackBar();
-        },
-      );
+      this.props.showAlertAction('error', 'Mật khẩu xác nhận không chính xác!')
       return;
+    } else {
+      const { txtPasscode,
+        txtNewPass,
+        NewPassword } = this.state;
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        IDUSER: userData.IDUSER,
+        OLDPASSWORD: txtPasscode,
+        PASSWORD: NewPassword
+      });
+      console.log(raw)
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch(API_URL + '/ChangePassword', requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.Success) {
+            console.log(result)
+            this.props.showAlertAction('success', result.Message);
+
+          }
+          else {
+            this.props.showAlertAction('error', result.Message);
+          }
+        })
+        .catch(error => console.log('error', error));
     }
   }
   render() {
@@ -132,7 +164,7 @@ class ProfileComponent extends Component {
           animationType="fade"
           transparent={true}
           visible={popupChangePassword}>
-          <TouchableWithoutFeedback onPress={() => { this.setState({ popupChangePassword: false }) }}>
+          <TouchableWithoutFeedback onPress={dismissKeyboard}>
             <View
               style={{
                 flex: 1,
@@ -151,15 +183,9 @@ class ProfileComponent extends Component {
                     >Thay đôi mật khẩu</Text>
                     <TextField
                       ref={this.txtPasscodeRef}
-                      onFocus={() => {
-                        this.focusIMG();
-                      }}
                       showEye={true}
-                      onBlur={() => this.notFocusIMG()}
                       label="Nhập mật khẩu cũ"
-                      numeric
                       secureTextEntry
-                      keyboardAppearance={color.keyboardAppearance}
                       value={this.state.txtPasscode}
                       onChangeText={(text) => {
                         this.setState({
@@ -169,15 +195,11 @@ class ProfileComponent extends Component {
                     />
                     <TextField
                       ref={this.txtNewPasscodeRef}
-                      onFocus={() => {
-                        this.focusIMG();
-                      }}
+
                       showEye={true}
-                      onBlur={() => this.notFocusIMG()}
+
                       label="Nhập mật khẩu mới "
-                      numeric
                       secureTextEntry
-                      keyboardAppearance={color.keyboardAppearance}
                       value={this.state.txtNewPass}
                       onChangeText={(text) => {
                         this.setState({
@@ -187,15 +209,11 @@ class ProfileComponent extends Component {
                     />
                     <TextField
                       ref={this.txtPasscodeCheckRef}
-                      onFocus={() => {
-                        this.focusIMG();
-                      }}
+
                       showEye={true}
-                      onBlur={() => this.notFocusIMG()}
+
                       label="Xác nhận mật khẩu"
-                      numeric
                       secureTextEntry
-                      keyboardAppearance={color.keyboardAppearance}
                       value={this.state.NewPassword}
                       onChangeText={(text) => {
                         this.setState({
@@ -272,4 +290,16 @@ const styles = StyleSheet.create({
   }
 
 });
-export default ProfileComponent;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showAlertAction: (form, message) =>
+      dispatch(showAlertAction(form, message)),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    data: state.showAlertReducer,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileComponent);

@@ -18,5 +18,5 @@ export const DataGetSubject = {
 
 // export const API_URL = 'http://192.168.0.102/api/ApiMobile';
 // export const API_URL = 'http://172.17.96.1/api/ApiMobile';
-export const API_URL = 'http://10.13.129.5/api/ApiMobile';
+export const API_URL = 'http://192.168.2.145/api/ApiMobile';
 

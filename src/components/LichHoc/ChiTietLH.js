@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, View, Image } from 'react-native';
 import Header from '../Custom/Header';
-import {userData} from '../../config/setting';
+import { userData } from '../../config/setting';
 import images from '../../res/img';
 export default class ChiTietLH extends Component {
   constructor(props) {
@@ -20,12 +20,12 @@ export default class ChiTietLH extends Component {
       this.props.route.params.item.LICHOC.CAHOC2 ||
       this.props.route.params.item.LICHOC.CAHOC3;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Header
           title="Chi tiết môn học"
           onPressBackButton={() => this.props.navigation.goBack()}
         />
-        <View style={{borderColor: 'red', padding: 20}}>
+        <View style={{ borderColor: 'red', padding: 20 }}>
           <Text
             style={{
               color: '#FA541C',
@@ -45,10 +45,10 @@ export default class ChiTietLH extends Component {
             Ca học: {CAHOC}
           </Text>
           <View style={styles.card}>
-            <Text style={{fontSize: 25, color: '#FA541C'}}>
+            <Text style={{ fontSize: 25, color: '#FA541C' }}>
               {this.props.route.params.item.TENMONHOC}
             </Text>
-            <Text style={{fontSize: 21, padding: 5}}>
+            <Text style={{ fontSize: 21, padding: 5 }}>
               <Image
                 source={images.icon_profile}
                 style={{
@@ -62,7 +62,7 @@ export default class ChiTietLH extends Component {
               />
               {userData.FULLNAME}
             </Text>
-            <Text style={{fontSize: 20, padding: 5}}>
+            <Text style={{ fontSize: 20, padding: 5 }}>
               <Image
                 source={images.ic_coso}
                 style={{
@@ -97,7 +97,7 @@ export default class ChiTietLH extends Component {
                 </Text>
               }
             </Text>
-            <Text style={{fontSize: 21, padding: 5}}>
+            <Text style={{ fontSize: 21, padding: 5 }}>
               Giảng viên: Bùi Mạnh Toàn
             </Text>
           </View>

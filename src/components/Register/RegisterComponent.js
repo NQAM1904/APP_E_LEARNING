@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import TextInputAnimated from '../Custom/TextInputAnimated';
 import images from '../../res/img/index';
-import {API_URL} from '../../config/setting';
+import { API_URL } from '../../config/setting';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -42,12 +42,12 @@ export default class RegisterComponent extends Component {
   handleChangeNienKhoa = (item) => {
     this.setState({
       idNienkhoa: item.value,
-      nganhChoose: {id: item.id, label: item.label, value: item.value},
+      nganhChoose: { id: item.id, label: item.label, value: item.value },
     });
   };
 
   handleChangeNganh = (value) => {
-    this.setState({idNganh: value});
+    this.setState({ idNganh: value });
   };
   async componentDidMount() {
     await this.getNienkhoa();
@@ -90,7 +90,7 @@ export default class RegisterComponent extends Component {
 
         arrNganh.push(arrObjNganh);
       });
-      this.setState({dataNienKhoa: arrNK, dataNganh: arrNganh, indexChoose: 0});
+      this.setState({ dataNienKhoa: arrNK, dataNganh: arrNganh, indexChoose: 0 });
       // console.log(arrNganh);
     } else {
       alert('Data lỗi');
@@ -98,7 +98,7 @@ export default class RegisterComponent extends Component {
   };
 
   onSignUp = () => {
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     const {
       username,
       password,
@@ -136,7 +136,7 @@ export default class RegisterComponent extends Component {
       idNganh == ''
     ) {
       alert('Vui lòng điền đủ thông tin!');
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
       return;
     }
 
@@ -155,7 +155,7 @@ export default class RegisterComponent extends Component {
           isLoading: false,
         });
         setTimeout(() => {
-          this.props.navigation.navigate('Login');
+          this.props.navigation.replace('Login');
         }, 2000);
         return result;
       })
@@ -197,72 +197,72 @@ export default class RegisterComponent extends Component {
             flexGrow: 1,
             justifyContent: 'center',
           }}>
-          <View style={{alignItems: 'center', marginBottom: 10}}>
+          <View style={{ alignItems: 'center', marginBottom: 10 }}>
             <Image
               source={images.logo_dangky}
               resizeMode="center"
-              style={{width: 250, height: 170}}
+              style={{ width: 250, height: 170 }}
             />
           </View>
 
-          <View style={{width: '90%', alignSelf: 'center'}}>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '65%'}}>
+          <View style={{ width: '90%', alignSelf: 'center' }}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '65%' }}>
                 <TextInputAnimated
                   style={{
                     marginRight: 10,
                     borderColor: '#8C8C8C',
                   }}
                   title="Tên"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={fullname}
-                  onChangeText={(text) => this.setState({fullname: text})}
+                  onChangeText={(text) => this.setState({ fullname: text })}
                 />
               </View>
-              <View style={{width: '35%'}}>
+              <View style={{ width: '35%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Nơi ở"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={address}
-                  onChangeText={(text) => this.setState({address: text})}
+                  onChangeText={(text) => this.setState({ address: text })}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '50%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     marginRight: 10,
                     borderColor: '#8C8C8C',
                   }}
                   title="Số điện thoại"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={phone}
                   keyboardType="numeric"
-                  onChangeText={(text) => this.setState({phone: text})}
+                  onChangeText={(text) => this.setState({ phone: text })}
                 />
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Mã số sinh viên"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={mssv}
                   keyboardType="numeric"
-                  onChangeText={(text) => this.setState({mssv: text})}
+                  onChangeText={(text) => this.setState({ mssv: text })}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '50%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '50%' }}>
                 <DropDownPicker
                   placeholder="Niên khóa"
-                  placeholderStyle={{color: '#8C8C8C'}}
+                  placeholderStyle={{ color: '#8C8C8C' }}
                   items={dataNienKhoa}
                   onChangeItem={(item) =>
                     this.setState({
@@ -277,11 +277,11 @@ export default class RegisterComponent extends Component {
                   }}
                 />
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <DropDownPicker
                   placeholder="Ngành"
                   labelStyle={styles.textDate}
-                  placeholderStyle={{color: '#8C8C8C'}}
+                  placeholderStyle={{ color: '#8C8C8C' }}
                   items={dataNganh[this.state.indexChoose]}
                   onChangeItem={(item) =>
                     this.setState({
@@ -294,47 +294,47 @@ export default class RegisterComponent extends Component {
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '100%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '100%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Email"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={email}
-                  onChangeText={(text) => this.setState({email: text})}
+                  onChangeText={(text) => this.setState({ email: text })}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', marginBottom: 12}}>
-              <View style={{width: '50%'}}>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                     marginRight: 10,
                   }}
                   title="Tài khoản"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={username}
-                  onChangeText={(text) => this.setState({username: text})}
+                  onChangeText={(text) => this.setState({ username: text })}
                 />
               </View>
-              <View style={{width: '50%'}}>
+              <View style={{ width: '50%' }}>
                 <TextInputAnimated
                   style={{
                     borderColor: '#8C8C8C',
                   }}
                   title="Mật khẩu"
-                  textInputStyles={{width: '100%'}}
+                  textInputStyles={{ width: '100%' }}
                   value={password}
                   secureTextEntry
-                  onChangeText={(text) => this.setState({password: text})}
+                  onChangeText={(text) => this.setState({ password: text })}
                 />
               </View>
             </View>
 
-            <View style={{marginTop: 18}}>
+            <View style={{ marginTop: 18 }}>
               <TouchableOpacity
                 onPress={() => this.onSignUp()}
                 style={{
@@ -346,7 +346,7 @@ export default class RegisterComponent extends Component {
                   borderRadius: 15,
                 }}>
                 <Text
-                  style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
+                  style={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}>
                   ĐĂNG KÝ
                 </Text>
               </TouchableOpacity>
@@ -366,7 +366,7 @@ export default class RegisterComponent extends Component {
                     height: 0,
                   }}
                 />
-                <Text style={{color: '#8C8C8C'}}>Hoặc</Text>
+                <Text style={{ color: '#8C8C8C' }}>Hoặc</Text>
                 <View
                   style={{
                     borderTopColor: '#8C8C8C',
@@ -378,7 +378,7 @@ export default class RegisterComponent extends Component {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Login')}
+                onPress={() => this.props.navigation.replace('Login')}
                 style={{
                   backgroundColor: 'white',
                   borderWidth: 1,
@@ -390,7 +390,7 @@ export default class RegisterComponent extends Component {
                   borderRadius: 15,
                 }}>
                 <Text
-                  style={{color: '#1890FF', fontWeight: 'bold', fontSize: 18}}>
+                  style={{ color: '#1890FF', fontWeight: 'bold', fontSize: 18 }}>
                   ĐĂNG NHẬP
                 </Text>
               </TouchableOpacity>

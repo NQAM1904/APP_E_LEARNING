@@ -19,8 +19,8 @@ export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'test',
-      password: '123',
+      username: '',
+      password: '',
       showpass: true,
       isLoading: false,
 
@@ -71,10 +71,11 @@ export default class LoginComponent extends Component {
         userData.FULLNAME = result.Data.FULLNAME;
         userData.ADDRESS = result.Data.ADDRESS;
         userData.TOKEN = result.Data.TOKEN;
+        userData.IDUSER = result.Data.IDUSER
 
         setTimeout(() => {
           this.setState({ isLoading: false });
-          this.props.navigation.navigate('Tab');
+          this.props.navigation.replace('Tab');
         }, 1000);
       } else {
         this.setState({ isLoading: false });
@@ -179,14 +180,14 @@ export default class LoginComponent extends Component {
                 />
               </TouchableOpacity>
             </View>
-            <View style={{ alignItems: 'flex-end' }}>
+            {/* <View style={{ alignItems: 'flex-end' }}>
               <TouchableOpacity onPress={() => alert('Tính năng đang cập nhật')}>
                 <Text
                   style={{ color: '#1890FF', fontSize: 17, fontWeight: 'bold' }}>
                   Quên mật khẩu
               </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={{ marginTop: 18 }}>
               <TouchableOpacity
                 onPress={() => this.onLogin()}
@@ -231,7 +232,7 @@ export default class LoginComponent extends Component {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Register')}
+                onPress={() => this.props.navigation.replace('Register')}
                 style={{
                   backgroundColor: 'white',
                   borderWidth: 1,

@@ -5,6 +5,8 @@ import Header from '../Custom/Header';
 import { API_URL, userData } from '../../config/setting';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
+import { showAlertAction } from '../../redux/action/showAlertAction';
+import { connect } from 'react-redux';
 
 class DangKyMH extends Component {
   constructor(props) {
@@ -53,12 +55,15 @@ class DangKyMH extends Component {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        alert(result.Message);
+
         if (result.Success) {
           this.props.navigation.goBack();
+          this.props.showAlertAction('success', result.Message)
+        } else {
+          this.props.showAlertAction('error', result.Message)
         }
       })
-      .catch((error) => alert(error));
+      .catch((error) => { this.props.showAlertAction('error', error) });
   };
   getMonHoc = () => {
     const url = API_URL + `/GetMonHocAllowDK?IDSINHVIEN=${userData.IDSTUDENT}`;
@@ -220,7 +225,20 @@ class DangKyMH extends Component {
     );
   }
 }
-export default DangKyMH;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showAlertAction: (form, message) =>
+      dispatch(showAlertAction(form, message)),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    data: state.showAlertReducer,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DangKyMH);
+
+
 const CA = [
   { id: 1, title: `Ca 1 (tiết 1,2,3): từ 06g45' đến 09g00'` },
   { id: 2, title: `Ca 2 (tiết 4,5,6): từ 09g20' đến 11g35'` },

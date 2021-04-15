@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
-import {userData, DataGetSubject, API_URL} from '../../config/setting';
+import React, { Component } from 'react';
+import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { userData, DataGetSubject, API_URL } from '../../config/setting';
 export default class ChooseYear extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +32,7 @@ export default class ChooseYear extends Component {
     if (result != undefined) {
       if (result.Success == true) {
         // console.log(result);
-        this.setState({NamHocData: result.Data});
+        this.setState({ NamHocData: result.Data });
       } else {
         alert('Dữ liệu nhận về thất bại');
       }
@@ -40,8 +40,8 @@ export default class ChooseYear extends Component {
   };
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{height: 60, width: '100%', flexDirection: 'row'}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ height: 60, width: '100%', flexDirection: 'row' }}>
           <View
             style={{
               height: 60,
@@ -64,7 +64,7 @@ export default class ChooseYear extends Component {
         </View>
 
         <View>
-          <Text style={{alignSelf: 'center'}}>
+          <Text style={{ alignSelf: 'center' }}>
             Lựa chọn năm học bạn muốn xem
           </Text>
           {this.state.NamHocData.map((item, index) => {
@@ -93,7 +93,7 @@ export default class ChooseYear extends Component {
                 onPress={() => {
                   DataGetSubject.idNam = item.IDNAM;
 
-                  this.props.navigation.navigate('MonHoc');
+                  this.props.navigation.replace('MonHoc');
                 }}>
                 <Text>{item.TENNAM}</Text>
               </TouchableOpacity>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -9,9 +9,9 @@ import {
   ScrollView,
 } from 'react-native';
 import moment from 'moment';
-import {API_URL, userData, DataGetSubject} from '../../config/setting';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import {LocaleConfig} from 'react-native-calendars';
+import { API_URL, userData, DataGetSubject } from '../../config/setting';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { LocaleConfig } from 'react-native-calendars';
 
 import images from '../../res/img';
 import ItemLH from './ItemLH';
@@ -117,7 +117,7 @@ export default class LichHocComponent extends Component {
                   date: tmp,
                   value: {
                     periods: [
-                      {startingDay: false, endingDay: true, color: '#5f9ea0'},
+                      { startingDay: false, endingDay: true, color: '#5f9ea0' },
                     ],
                     DataVal: {
                       BuoiHoc1: item.LICHOC.BUOIHOC1,
@@ -230,7 +230,7 @@ export default class LichHocComponent extends Component {
           return (
             <ItemLH
               onPress={() =>
-                this.props.navigation.navigate('ChiTietLH', {item})
+                this.props.navigation.replace('ChiTietLH', { item })
               }
               key={index}
               CAHOC={
@@ -250,7 +250,7 @@ export default class LichHocComponent extends Component {
     return result;
   };
   render() {
-    const {selectItem, DataShow, DataTickArr} = this.state;
+    const { selectItem, DataShow, DataTickArr } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar
@@ -258,7 +258,7 @@ export default class LichHocComponent extends Component {
           hidden={false}
           backgroundColor="#820014"
         />
-        <View style={{height: 60, width: '100%'}}>
+        <View style={{ height: 60, width: '100%' }}>
           <View
             style={{
               height: 60,
@@ -268,7 +268,7 @@ export default class LichHocComponent extends Component {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{color: '#262626', fontSize: 20, marginLeft: 15}}>
+            <Text style={{ color: '#262626', fontSize: 20, marginLeft: 15 }}>
               Lịch học
             </Text>
             <TouchableOpacity
@@ -277,13 +277,13 @@ export default class LichHocComponent extends Component {
               }}>
               <Image
                 source={images.plus}
-                style={{width: 50, height: 50, tintColor: '#000'}}
+                style={{ width: 50, height: 50, tintColor: '#000' }}
                 resizeMode={'contain'}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <Calendar
             onDayPress={(day) => this.getMonHoc(day.dateString)}
             markedDates={this.state.DataTick}
@@ -292,13 +292,13 @@ export default class LichHocComponent extends Component {
           />
         </View>
         {/* this.GetDayLichHoc(day.dateString) */}
-        <View style={{flex: 1, padding: 10}}>
-          <Text style={{color: '#161616', padding: 5, fontSize: 20}}>
+        <View style={{ flex: 1, padding: 10 }}>
+          <Text style={{ color: '#161616', padding: 5, fontSize: 20 }}>
             Hôm nay
           </Text>
           <ScrollView
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{flexGrow: 1}}>
+            contentContainerStyle={{ flexGrow: 1 }}>
             {this.showMon(selectItem)}
           </ScrollView>
         </View>
